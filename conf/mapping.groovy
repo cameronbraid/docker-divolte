@@ -99,8 +99,9 @@ mapping {
         when eventType().equalTo("pageView") apply {
             map pageViewId() onto 'pageViewId'
 
+            def pageStatusCode = parse eventParameters().value('pageStatusCode') to int
             map eventParameters().value('pageTitle') onto 'pageTitle'
-            map eventParameters().value('pageStatusCode') onto 'pageStatusCode'
+            map pageStatusCode onto 'pageStatusCode'
 
             //  "navigation" | "hashchange" | "popstate" - see src/nitro/types/NavigationTrigger.ts
             map eventParameters().value('pageNavigationTrigger') onto 'pageNavigationTrigger'
