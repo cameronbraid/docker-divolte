@@ -16,7 +16,7 @@ mapping {
     // session
 
     map partyId() onto 'partyId'
-    map sessionId() onto 'sessionId'
+    map sessionId() onto 'partySessionId'
     map remoteHost() onto 'remoteHost'
     map firstInSession() onto 'firstInSession'
 
@@ -34,10 +34,9 @@ mapping {
 
     // ids
 
-    map cookie('c') onto 'customerId'
-    map cookie('JSESSIONID') onto 'jSessionId'
+    map eventParameters().value('customerId') onto 'customerId'
+    map eventParameters().value('sessionId') onto 'sessionId'
     map eventParameters().value('requestId') onto 'requestId'
-    map cookie('xs') onto 'xSessionId'
 
     // system
 
@@ -99,6 +98,9 @@ mapping {
         
         when eventType().equalTo("pageView") apply {
             map pageViewId() onto 'pageViewId'
+
+            map eventParameters().value('pageTitle') onto 'pageTitle'
+            map eventParameters().value('pageStatusCode') onto 'pageStatusCode'
 
             //  "navigation" | "hashchange" | "popstate" - see src/nitro/types/NavigationTrigger.ts
             map eventParameters().value('pageNavigationTrigger') onto 'pageNavigationTrigger'
