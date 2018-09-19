@@ -13,6 +13,8 @@
     { "name": "timestamp", "type": "long" },
     { "name": "clientTimestamp", "type": "long" },
 
+    { "name": "environment", "type": ["null", "string"], "default": "dev" },
+
     // session
 
     { "name": "partyId", "type": ["null", "string"], "default": null },
@@ -41,7 +43,7 @@
     // system
 
     { "name": "frontendName", "type": ["null", "string"], "default": null },
-    { "name": "frontendRelease", "type": ["null", "string"], "default": null },
+    { "name": "frontendVersion", "type": ["null", "string"], "default": null },
     { "name": "frontendServerId", "type": ["null", "string"], "default": null },
     { "name": "backendServerId", "type": ["null", "string"], "default": null },
 
@@ -55,7 +57,7 @@
       //   "name": "DivolteEventType",
       //   "symbols": [
       //     "pageView",
-      //     "bookingConversion",
+      //     "orderConversion",
       //     "relocationConversion",
       //     "priceWatchConversion",
       //     "hiccupConversion",
@@ -109,7 +111,7 @@
     // referer / version
 
     { "name": "referer", "type": ["null", "string"], "default": null },
-    { "name": "affilaiteCode", "type": ["null", "string"], "default": null },
+    { "name": "affiliateCode", "type": ["null", "string"], "default": null },
     { "name": "referenceCode", "type": ["null", "string"], "default": null },
     { "name": "variation", "type": ["null", "string"], "default": null },
 
@@ -152,7 +154,7 @@
 
     //  conversion
 
-    { "name": "bookingOrderKey", "type": ["null", "string"], "default": null },
+    { "name": "orderKey", "type": ["null", "string"], "default": null },
     { "name": "relocationRef", "type": ["null", "string"], "default": null },
     { "name": "hiccupRef", "type": ["null", "string"], "default": null },
 

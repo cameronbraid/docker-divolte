@@ -11,6 +11,8 @@ mapping {
     map timestamp() onto 'timestamp'
     map clientTimestamp() onto 'clientTimestamp'
 
+    map eventParameters().value('environment') onto 'environment'
+
     // session
 
     map partyId() onto 'partyId'
@@ -40,14 +42,14 @@ mapping {
     // system
 
     map eventParameters().value('frontendName') onto 'frontendName'
-    map eventParameters().value('frontendRelease') onto 'frontendRelease'
+    map eventParameters().value('frontendVersion') onto 'frontendVersion'
     map eventParameters().value('frontendServerId') onto 'frontendServerId'
     map eventParameters().value('backendServerId') onto 'backendServerId'
 
     // referer / version
 
     map referer() onto 'referer'
-    map cookie('affiliate-referral') onto 'affilaiteCode'
+    map cookie('affiliate-referral') onto 'affiliateCode'
     map cookie('reference') onto 'referenceCode'
     map locationUri.query().value('variation') onto 'variation'
 
@@ -113,8 +115,8 @@ mapping {
             exit()
         }
 
-        when eventType().equalTo("bookingConversion") apply {
-            map eventParameters().value('orderKey') onto 'bookingOrderKey'
+        when eventType().equalTo("orderPlaced") apply {
+            map eventParameters().value('orderKey') onto 'orderKey'
             exit()
         }
 
