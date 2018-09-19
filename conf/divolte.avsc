@@ -1,0 +1,164 @@
+{
+  "namespace": "drivenow.eventstream.types",
+  "type": "record",
+  "name": "DivolteEvent",
+  "fields": [
+    // validity
+
+    { "name": "detectedDuplicate", "type": "boolean" },
+    { "name": "detectedCorruption", "type": "boolean" },
+
+    // timestamp
+
+    { "name": "timestamp", "type": "long" },
+    { "name": "clientTimestamp", "type": "long" },
+
+    // session
+
+    { "name": "partyId", "type": ["null", "string"], "default": null },
+    { "name": "sessionId", "type": ["null", "string"], "default": null },
+    { "name": "remoteHost", "type":  ["null", "string"], "default": null },
+    { "name": "firstInSession", "type": "boolean" },
+
+    // user
+
+    { "name": "email", "type": ["null", "string"], "default": null },
+    { "name": "username", "type": ["null", "string"], "default": null },
+
+    // is
+
+    { "name": "isAdmin", "type": "boolean", "default": false },
+    { "name": "isOffice", "type": "boolean", "default": false },
+    { "name": "isTester", "type": "boolean", "default": false },
+
+    // ids
+
+    { "name": "customerId", "type":["null", "string"], "default": null },
+    { "name": "jSessionId", "type": ["null", "string"], "default": null },
+    { "name": "requestId", "type": ["null", "string"], "default": null },
+    { "name": "xSessionId", "type": ["null", "string"], "default": null },
+
+    // system
+
+    { "name": "frontendName", "type": ["null", "string"], "default": null },
+    { "name": "frontendRelease", "type": ["null", "string"], "default": null },
+    { "name": "frontendServerId", "type": ["null", "string"], "default": null },
+    { "name": "backendServerId", "type": ["null", "string"], "default": null },
+
+    // page
+
+    {
+      "name": "eventType",
+      "type": "string"
+      // "type": {
+      //   "type": "enum",
+      //   "name": "DivolteEventType",
+      //   "symbols": [
+      //     "pageView",
+      //     "bookingConversion",
+      //     "relocationConversion",
+      //     "priceWatchConversion",
+      //     "hiccupConversion",
+      //     "abTestParticipation",
+      //     "abTestConversion"
+      //   ]
+      // }
+    },
+
+    { "name": "pageViewId", "type": ["null", "string"], "default": null },
+    { "name": "pageType", "type": ["null", "string"], "default": null },
+    { "name": "pageTypeRef", "type": ["null", "string"], "default": null },
+    {
+      "name": "pageNavigationTrigger",
+      "type": [
+        "null",
+        "string"
+        // {
+        //   "type": "enum",
+        //   "name": "DivolteNavigationTrigger",
+        //   "symbols": ["navigation", "hashchange", "popstate"]
+        // }
+      ],
+      "default": null
+    },
+
+    // uri
+
+    { "name": "uri", "type": ["null", "string"], "default": null },
+    { "name": "uriScheme", "type": ["null", "string"], "default": null },
+    { "name": "uriPath", "type": ["null", "string"], "default": null },
+    { "name": "uriHost", "type": ["null", "string"], "default": null },
+    { "name": "uriPort", "type": ["null", "int"], "default": null },
+    { "name": "uriQueryString", "type": ["null", "string"], "default": null },
+    { "name": "uriFragment", "type": ["null", "string"], "default": null },
+    {
+      "name": "uriQuery",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      ],
+      "default": null
+    },
+
+    // referer / version
+
+    { "name": "referer", "type": ["null", "string"], "default": null },
+    { "name": "affilaiteCode", "type": ["null", "string"], "default": null },
+    { "name": "referenceCode", "type": ["null", "string"], "default": null },
+    { "name": "variation", "type": ["null", "string"], "default": null },
+
+    // viewport / screen
+
+    { "name": "viewportPixelWidth", "type": ["null", "int"], "default": null },
+    { "name": "viewportPixelHeight", "type": ["null", "int"], "default": null },
+    { "name": "screenPixelWidth", "type": ["null", "int"], "default": null },
+    { "name": "screenPixelHeight", "type": ["null", "int"], "default": null },
+    { "name": "devicePixelRatio", "type": ["null", "int"], "default": null },
+
+    // user agent
+
+    { "name": "userAgent", "type": ["null", "string"], "default": null },
+    { "name": "userAgentName", "type": ["null", "string"], "default": null },
+    { "name": "userAgentFamily", "type": ["null", "string"], "default": null },
+    { "name": "userAgentVendor", "type": ["null", "string"], "default": null },
+    { "name": "userAgentType", "type": ["null", "string"], "default": null },
+    { "name": "userAgentVersion", "type": ["null", "string"], "default": null },
+    {
+      "name": "userAgentDeviceCategory",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "userAgentOsFamily",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "userAgentOsVersion",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "userAgentOsVendor",
+      "type": ["null", "string"],
+      "default": null
+    },
+
+    //  conversion
+
+    { "name": "bookingOrderKey", "type": ["null", "string"], "default": null },
+    { "name": "relocationRef", "type": ["null", "string"], "default": null },
+    { "name": "hiccupRef", "type": ["null", "string"], "default": null },
+
+    //  a/b test
+
+    { "name": "abTestExperiment", "type": ["null", "string"], "default": null },
+    { "name": "abTestAlternative", "type": ["null", "string"], "default": null }
+  ]
+}

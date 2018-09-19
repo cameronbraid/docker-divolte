@@ -36,7 +36,6 @@ RUN apt-get update && \
     echo "4bbd88cffebbb36beeb3c82008adce6db36b76263211ea43fd77cd8e80badb32  divolte-collector-${DIVOLTE_VERSION}.tar.gz" | sha256sum -c - && \
     tar zxpf divolte-collector-${DIVOLTE_VERSION}.tar.gz -C /opt/divolte && \
     mv /opt/divolte/divolte-collector-${DIVOLTE_VERSION}/ /opt/divolte/divolte-collector && \
-    apt-get remove -y  curl && \
     apt-get autoremove -y && \
     apt-get clean -y && \
     rm -fr /var/tmp/* /tmp/*
@@ -53,5 +52,5 @@ COPY start.sh /opt/divolte/
 # Expose the Divolte Collector click simulation web page
 #
 EXPOSE 8290
-
+WORKDIR /opt/divolte/
 CMD ["/opt/divolte/start.sh"]

@@ -15,11 +15,3 @@ services:
       INTER_BROKER: INTERNAL
 
   # Divolte container
-  docker-divolte:
-    build: .
-    environment:
-      DIVOLTE_KAFKA_BROKER_LIST: divolte-kafka:9092
-    ports:
-      - 8290:8290
-    depends_on:
-      - divolte-kafka
