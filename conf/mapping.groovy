@@ -118,7 +118,7 @@ mapping {
             exit()
         }
 
-        when eventType().equalTo("orderPlaced") apply {
+        when eventType().equalTo("orderConversion") apply {
             map eventParameters().value('orderKey') onto 'orderKey'
             exit()
         }
