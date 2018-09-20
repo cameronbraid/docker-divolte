@@ -1,4 +1,26 @@
 mapping {
+
+    def splitLocation = { encodedLocation ->
+        
+        if ( encodedLocation == null || encodedLocation.trim() == '') return [type:null, name: null, value: null]
+
+        def parts = loc.split(";")
+
+        return parts.size() == 1 
+            ? [type: 'loc',    name: encodedLocation, value: encodedLocation]
+            : [type: parts[0], name: parts[1],        value: parts[2]]
+    }
+
+
+    def boolParam = { name -> 
+        parse eventParameters().value(name) to boolean
+    }
+
+    def stringOrNullParam = { name -> 
+        def val = (eventParameters().value(name) ?: '').trim()
+        return val == '' ? null : val
+    }
+
     def locationUri = parse location() to uri
 
     // validity
@@ -11,7 +33,7 @@ mapping {
     map timestamp() onto 'timestamp'
     map clientTimestamp() onto 'clientTimestamp'
 
-    map eventParameters().value('environment') onto 'environment'
+    map stringOrNullParam('environment') onto 'environment'
 
     // session
 
@@ -22,28 +44,27 @@ mapping {
 
     // user 
 
-    map eventParameters().value('email') onto 'email'
-    map eventParameters().value('username') onto 'username'
+    map stringOrNullParam('email') onto 'email'
+    map stringOrNullParam('username') onto 'username'
 
     // is
 
-    def boolParam = { name -> parse eventParameters().value(name) to boolean  }
     map boolParam('isAdmin') onto 'isAdmin'
     map boolParam('isOffice') onto 'isOffice'
     map boolParam('isTester') onto 'isTester'
 
     // ids
 
-    map eventParameters().value('customerId') onto 'customerId'
-    map eventParameters().value('sessionId') onto 'sessionId'
-    map eventParameters().value('requestId') onto 'requestId'
+    map stringOrNullParam('customerId') onto 'customerId'
+    map stringOrNullParam('sessionId') onto 'sessionId'
+    map stringOrNullParam('requestId') onto 'requestId'
 
     // system
 
-    map eventParameters().value('frontendName') onto 'frontendName'
-    map eventParameters().value('frontendVersion') onto 'frontendVersion'
-    map eventParameters().value('frontendServerId') onto 'frontendServerId'
-    map eventParameters().value('backendServerId') onto 'backendServerId'
+    map stringOrNullParam('frontendName') onto 'frontendName'
+    map stringOrNullParam('frontendVersion') onto 'frontendVersion'
+    map stringOrNullParam('frontendServerId') onto 'frontendServerId'
+    map stringOrNullParam('backendServerId') onto 'backendServerId'
 
     // referer / version
 
@@ -87,6 +108,29 @@ mapping {
     map ua.osVendor() onto 'userAgentOsVendor'
 
 
+    // site context
+
+    map stringOrNullParam('countryCode') onto 'countryCode'
+    map stringOrNullParam('locationCountryCode') onto 'locationCountryCode'
+    map stringOrNullParam('vehicleCategory') onto 'vehicleCategory'
+
+    map stringOrNullParam('pickupDate') onto 'pickupDate'
+    map stringOrNullParam('dropoffDate') onto 'dropoffDate'
+
+    map stringOrNullParam('pickupLocation') onto 'pickupLocation'
+    
+    def splitPickup = splitLocation(stringOrNullParam('pickupLocation'))
+    map splitPickup.type onto 'pickupLocationType'
+    map splitPickup.name onto 'pickupLocationName'
+    map splitPickup.value onto 'pickupLocationValue'
+
+    map stringOrNullParam('dropoffLocation') onto 'dropoffLocation'
+    def splitDropoff = splitLocation(stringOrNullParam('dropoffLocation'))
+    map splitDropoff.type onto 'dropoffLocationType'
+    map splitDropoff.name onto 'dropoffLocationName'
+    map splitDropoff.value onto 'dropoffLocationValue'
+
+    map stringOrNullParam('vehicle') onto 'vehicle'
 
     // event type
 
@@ -100,31 +144,31 @@ mapping {
             map pageViewId() onto 'pageViewId'
 
             def pageStatusCode = parse eventParameters().value('pageStatusCode') to int
-            map eventParameters().value('pageTitle') onto 'pageTitle'
+            map stringOrNullParam('pageTitle') onto 'pageTitle'
             map pageStatusCode onto 'pageStatusCode'
 
             //  "navigation" | "hashchange" | "popstate" - see src/nitro/types/NavigationTrigger.ts
-            map eventParameters().value('pageNavigationTrigger') onto 'pageNavigationTrigger'
+            map stringOrNullParam('pageNavigationTrigger') onto 'pageNavigationTrigger'
 
             // page type
 
             // CMS driven: homePage, outboundCountryHomePage, locationLandingPage, mediaHubLocationLandingPage, supplierPage, vehiclePage, promotionPage, cmsPage
             // Frontend driven : searchPage, detailsPage, bookPage, paymentPage, confirmationPage
-            map eventParameters().value('pageType') onto 'pageType'
+            map stringOrNullParam('pageType') onto 'pageType'
             // llp ref, supplier page ref etc.
-            map eventParameters().value('pageTypeRef') onto 'pageTypeRef'
+            map stringOrNullParam('pageTypeRef') onto 'pageTypeRef'
 
 
             exit()
         }
 
         when eventType().equalTo("orderConversion") apply {
-            map eventParameters().value('orderKey') onto 'orderKey'
+            map stringOrNullParam('orderKey') onto 'orderKey'
             exit()
         }
 
         when eventType().equalTo("relocationConversion") apply {
-            map eventParameters().value('relocationRef') onto 'relocationRef'
+            map stringOrNullParam('relocationRef') onto 'relocationRef'
             exit()
         }
 
@@ -133,19 +177,19 @@ mapping {
         }
 
         when eventType().equalTo("abTestParticipation") apply {
-            map eventParameters().value('abTestExperiment') onto 'abTestExperiment'
-            map eventParameters().value('abTestAlternative') onto 'abTestAlternative'
+            map stringOrNullParam('abTestExperiment') onto 'abTestExperiment'
+            map stringOrNullParam('abTestAlternative') onto 'abTestAlternative'
             exit()
         }
 
         when eventType().equalTo("abTestConversion") apply {
-            map eventParameters().value('abTestExperiment') onto 'abTestExperiment'
-            map eventParameters().value('abTestAlternative') onto 'abTestAlternative'
+            map stringOrNullParam('abTestExperiment') onto 'abTestExperiment'
+            map stringOrNullParam('abTestAlternative') onto 'abTestAlternative'
             exit()
         }
 
         when eventType().equalTo("hiccupConversion") apply {
-            map eventParameters().value('hiccupRef') onto 'hiccupRef'
+            map stringOrNullParam('hiccupRef') onto 'hiccupRef'
             exit()
         }
 

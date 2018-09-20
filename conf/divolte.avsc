@@ -46,6 +46,28 @@
     { "name": "frontendServerId", "type": ["null", "string"], "default": null },
     { "name": "backendServerId", "type": ["null", "string"], "default": null },
 
+
+    // site context
+
+    { "name": "countryCode", "type": ["null", "string"], "default": null },
+    { "name": "locationCountryCode", "type": ["null", "string"], "default": null },
+    { "name": "vehicleCategory", "type": ["null", "string"], "default": null },
+
+    { "name": "pickupDate", "type": ["null", "string"], "default": null },
+    { "name": "dropoffDate", "type": ["null", "string"], "default": null },
+
+    { "name": "pickupLocation", "type": ["null", "string"], "default": null },
+    { "name": "pickupLocationType", "type": ["null", "string"], "default": null },
+    { "name": "pickupLocationName", "type": ["null", "string"], "default": null },
+    { "name": "pickupLocationValue", "type": ["null", "string"], "default": null },
+
+    { "name": "dropoffLocation", "type": ["null", "string"], "default": null },
+    { "name": "dropoffLocationType", "type": ["null", "string"], "default": null },
+    { "name": "dropoffLocationName", "type": ["null", "string"], "default": null },
+    { "name": "dropoffLocationValue", "type": ["null", "string"], "default": null },
+    
+    { "name": "vehicle", "type": ["null", "string"], "default": null },
+
     // page
 
     {
