@@ -1,25 +1,31 @@
 mapping {
 
-    def splitLocation = { encodedLocation ->
+    // def splitLocation = { encodedLocation ->
         
-        if ( encodedLocation == null || encodedLocation.trim() == '') return [type:null, name: null, value: null]
+    //     if ( encodedLocation == null || encodedLocation.trim() == '') return [type:null, name: null, value: null]
 
-        def parts = encodedLocation.split(";")
+    //     def parts = encodedLocation.split(";")
 
-        return parts.size() == 1 
-            ? [type: 'loc',    name: encodedLocation, value: encodedLocation]
-            : [type: parts[0], name: parts[1],        value: parts[2]]
-    }
+    //     return parts.size() == 1 
+    //         ? [type: 'loc',    name: encodedLocation, value: encodedLocation]
+    //         : [type: parts[0], name: parts[1],        value: parts[2]]
+    // }
 
 
     def boolParam = { name -> 
         parse eventParameters().value(name) to boolean
     }
 
-    def stringOrNullParam = { name -> 
-        eventParameters().path("$.${name}")
+    def mapOptionalSringParam = { name -> 
+        def eventParam = eventParameters().value(name)
+        when eventParam.isPresent() apply {
+            map eventParam onto name
+        }
     }
 
+    def sringParamValue = { name ->
+        def eventParam = eventParameters().value(name)
+    }
     def locationUri = parse location() to uri
 
     // validity
@@ -32,7 +38,7 @@ mapping {
     map timestamp() onto 'timestamp'
     map clientTimestamp() onto 'clientTimestamp'
 
-    map stringOrNullParam('environment') onto 'environment'
+    mapOptionalSringParam('environment')
 
     // session
 
@@ -43,9 +49,8 @@ mapping {
 
     // user 
 
-    map stringOrNullParam('email') onto 'email'
-    map stringOrNullParam('username') onto 'username'
-
+    mapOptionalSringParam('email')
+    mapOptionalSringParam('username')
     // is
 
     map boolParam('isAdmin') onto 'isAdmin'
@@ -54,16 +59,16 @@ mapping {
 
     // ids
 
-    map stringOrNullParam('customerId') onto 'customerId'
-    map stringOrNullParam('sessionId') onto 'sessionId'
-    map stringOrNullParam('requestId') onto 'requestId'
+    mapOptionalSringParam('customerId')
+    mapOptionalSringParam('sessionId')
+    mapOptionalSringParam('requestId')
 
     // system
 
-    map stringOrNullParam('frontendName') onto 'frontendName'
-    map stringOrNullParam('frontendVersion') onto 'frontendVersion'
-    map stringOrNullParam('frontendServerId') onto 'frontendServerId'
-    map stringOrNullParam('backendServerId') onto 'backendServerId'
+    mapOptionalSringParam('frontendName')
+    mapOptionalSringParam('frontendVersion')
+    mapOptionalSringParam('frontendServerId')
+    mapOptionalSringParam('backendServerId')
 
     // referer / version
 
@@ -109,27 +114,35 @@ mapping {
 
     // site context
 
-    map stringOrNullParam('countryCode') onto 'countryCode'
-    map stringOrNullParam('locationCountryCode') onto 'locationCountryCode'
-    map stringOrNullParam('vehicleCategory') onto 'vehicleCategory'
+    mapOptionalSringParam('countryCode')
+    mapOptionalSringParam('locationCountryCode')
+    mapOptionalSringParam('vehicleCategory')
 
-    map stringOrNullParam('pickupDate') onto 'pickupDate'
-    map stringOrNullParam('dropoffDate') onto 'dropoffDate'
+    mapOptionalSringParam('pickupDate')
+    mapOptionalSringParam('dropoffDate')
 
-    map stringOrNullParam('pickupLocation') onto 'pickupLocation'
-    
-    def splitPickup = splitLocation(stringOrNullParam('pickupLocation'))
-    map splitPickup.type onto 'pickupLocationType'
-    map splitPickup.name onto 'pickupLocationName'
-    map splitPickup.value onto 'pickupLocationValue'
+    mapOptionalSringParam('pickupLocation')
+    mapOptionalSringParam('pickupLocationType')
+    mapOptionalSringParam('pickupLocationName')
+    mapOptionalSringParam('pickupLocationValue')
 
-    map stringOrNullParam('dropoffLocation') onto 'dropoffLocation'
-    def splitDropoff = splitLocation(stringOrNullParam('dropoffLocation'))
-    map splitDropoff.type onto 'dropoffLocationType'
-    map splitDropoff.name onto 'dropoffLocationName'
-    map splitDropoff.value onto 'dropoffLocationValue'
+    mapOptionalSringParam('dropoffLocation')
+    mapOptionalSringParam('dropoffLocationType')
+    mapOptionalSringParam('dropoffLocationName')
+    mapOptionalSringParam('dropoffLocationValue')
 
-    map stringOrNullParam('vehicle') onto 'vehicle'
+    // def splitPickup = splitLocation(sringParamValue('pickupLocation'))
+    // map splitPickup.type onto 'pickupLocationType'
+    // map splitPickup.name onto 'pickupLocationName'
+    // map splitPickup.value onto 'pickupLocationValue'
+
+    // mapOptionalSringParam('dropoffLocation')
+    // def splitDropoff = splitLocation(sringParamValue('dropoffLocation'))
+    // map splitDropoff.type onto 'dropoffLocationType'
+    // map splitDropoff.name onto 'dropoffLocationName'
+    // map splitDropoff.value onto 'dropoffLocationValue'
+
+    mapOptionalSringParam('vehicle')
 
     // event type
 
@@ -143,31 +156,31 @@ mapping {
             map pageViewId() onto 'pageViewId'
 
             def pageStatusCode = parse eventParameters().value('pageStatusCode') to int
-            map stringOrNullParam('pageTitle') onto 'pageTitle'
+            mapOptionalSringParam('pageTitle')
             map pageStatusCode onto 'pageStatusCode'
 
             //  "navigation" | "hashchange" | "popstate" - see src/nitro/types/NavigationTrigger.ts
-            map stringOrNullParam('pageNavigationTrigger') onto 'pageNavigationTrigger'
+            mapOptionalSringParam('pageNavigationTrigger')
 
             // page type
 
             // CMS driven: homePage, outboundCountryHomePage, locationLandingPage, mediaHubLocationLandingPage, supplierPage, vehiclePage, promotionPage, cmsPage
             // Frontend driven : searchPage, detailsPage, bookPage, paymentPage, confirmationPage
-            map stringOrNullParam('pageType') onto 'pageType'
+            mapOptionalSringParam('pageType')
             // llp ref, supplier page ref etc.
-            map stringOrNullParam('pageTypeRef') onto 'pageTypeRef'
+            mapOptionalSringParam('pageTypeRef')
 
 
             exit()
         }
 
         when eventType().equalTo("orderConversion") apply {
-            map stringOrNullParam('orderKey') onto 'orderKey'
+            mapOptionalSringParam('orderKey')
             exit()
         }
 
         when eventType().equalTo("relocationConversion") apply {
-            map stringOrNullParam('relocationRef') onto 'relocationRef'
+            mapOptionalSringParam('relocationRef')
             exit()
         }
 
@@ -176,19 +189,19 @@ mapping {
         }
 
         when eventType().equalTo("abTestParticipation") apply {
-            map stringOrNullParam('abTestExperiment') onto 'abTestExperiment'
-            map stringOrNullParam('abTestAlternative') onto 'abTestAlternative'
+            mapOptionalSringParam('abTestExperiment')
+            mapOptionalSringParam('abTestAlternative')
             exit()
         }
 
         when eventType().equalTo("abTestConversion") apply {
-            map stringOrNullParam('abTestExperiment') onto 'abTestExperiment'
-            map stringOrNullParam('abTestAlternative') onto 'abTestAlternative'
+            mapOptionalSringParam('abTestExperiment')
+            mapOptionalSringParam('abTestAlternative')
             exit()
         }
 
         when eventType().equalTo("hiccupConversion") apply {
-            map stringOrNullParam('hiccupRef') onto 'hiccupRef'
+            mapOptionalSringParam('hiccupRef')
             exit()
         }
 
