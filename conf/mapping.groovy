@@ -4,7 +4,7 @@ mapping {
         
         if ( encodedLocation == null || encodedLocation.trim() == '') return [type:null, name: null, value: null]
 
-        def parts = loc.split(";")
+        def parts = encodedLocation.split(";")
 
         return parts.size() == 1 
             ? [type: 'loc',    name: encodedLocation, value: encodedLocation]
