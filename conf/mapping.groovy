@@ -17,7 +17,7 @@ mapping {
     }
 
     def stringOrNullParam = { name -> 
-        def val = (eventParameters().value(name) ?: '').trim()
+        def val = (eventParameters().value(name) ?: '').toString().trim()
         return val == '' ? null : val
     }
 
