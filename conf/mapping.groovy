@@ -17,8 +17,7 @@ mapping {
     }
 
     def stringOrNullParam = { name -> 
-        def val = parse eventParameters().value(name) to String
-        return (val == "")  ? null : val
+        eventParameters().path("$.${name}")
     }
 
     def locationUri = parse location() to uri
