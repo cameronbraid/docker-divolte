@@ -26,9 +26,9 @@ LABEL org.label-schema.name="Divolte ${DIVOLTE_VERSION}" \
 
 RUN apt-get update && \
     if [ "$ENABLE_KERBEROS" = "yes" ]; then\
-        apt-get install -y --allow-unauthenticated curl krb5-user;\
+        apt-get install -y curl krb5-user;\
     else\
-        apt-get install -y --allow-unauthenticated curl;\
+        apt-get install -y curl;\
     fi && \
     mkdir -p /opt/divolte && \
     cd /tmp/ && \
