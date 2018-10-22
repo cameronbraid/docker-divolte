@@ -71,15 +71,16 @@ mapping {
     mapOptionalSringParam('backendServerId')
 
     // referer / version
-    def referer
+    def refererUri
     when eventParameters().value("referer").isPresent() apply {
-        referer = eventParameters().value("referer")
+        map eventParameters().value("referer") onto 'referer'
+        refererUri = parse eventParameters().value("referer") to uri
     }
     when eventParameters().value("referer").isAbsent() apply {
-        referer = referer()
+        map referer() onto 'referer'
+        parse referer() to uri
     }
 
-    def refererUri = parse referer to uri
     map refererUri.scheme() onto 'refererScheme'
     map refererUri.path() onto 'refererPath'
     map refererUri.host() onto 'refererHost'
