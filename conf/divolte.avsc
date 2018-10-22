@@ -13,7 +13,7 @@
     { "name": "timestamp", "type": "long" },
     { "name": "clientTimestamp", "type": "long" },
 
-    { "name": "environment", "type": ["null", "string"], "default": "dev" },
+    { "name": "environment", "type": ["null", "string"], "default": null },
 
     // session
 
@@ -84,6 +84,7 @@
       //     "hiccupConversion",
       //     "abTestParticipation",
       //     "abTestConversion"
+      //     "widgetView"
       //   ]
       // }
     },
@@ -134,6 +135,27 @@
     // referer / version
 
     { "name": "referer", "type": ["null", "string"], "default": null },
+    { "name": "refererScheme", "type": ["null", "string"], "default": null },
+    { "name": "refererPath", "type": ["null", "string"], "default": null },
+    { "name": "refererHost", "type": ["null", "string"], "default": null },
+    { "name": "refererPort", "type": ["null", "int"], "default": null },
+    { "name": "refererQueryString", "type": ["null", "string"], "default": null },
+    { "name": "refererFragment", "type": ["null", "string"], "default": null },
+    {
+      "name": "refererQuery",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": {
+            "type": "array",
+            "items": "string"
+          }
+        }
+      ],
+      "default": null
+    },
+
     { "name": "affiliateCode", "type": ["null", "string"], "default": null },
     { "name": "referenceCode", "type": ["null", "string"], "default": null },
     { "name": "variation", "type": ["null", "string"], "default": null },

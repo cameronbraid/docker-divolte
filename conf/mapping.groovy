@@ -73,7 +73,15 @@ mapping {
     // referer / version
 
     map referer() onto 'referer'
-    map cookie('affiliate-referral') onto 'affiliateCode'
+    map refererUri.scheme() onto 'refererScheme'
+    map refererUri.path() onto 'refererPath'
+    map refererUri.host() onto 'refererHost'
+    map refererUri.port() onto 'refererPort'
+    map refererUri.decodedQueryString() onto 'refererQueryString'
+    map refererUri.query() onto 'refererQuery'
+    map refererUri.decodedFragment() onto 'refererFragment'
+
+    mapOptionalSringParam('affiliateCode')
     map cookie('reference') onto 'referenceCode'
     map locationUri.query().value('variation') onto 'variation'
 
