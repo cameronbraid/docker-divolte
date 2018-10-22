@@ -1,9 +1,3 @@
 #!/bin/bash
-
-if [ -z "$SCHEMA_REGISTRY" ]; then
-  echo "SCHEMA_REGISTRY env not, expecting something like http://schema-registry.example.com:8081"
-  exit -2
-fi
-
 echo "Getting divolte"
-curl "${SCHEMA_REGISTRY}/subjects/divolte-value/versions/latest"
+curl "${SCHEMA_REGISTRY:-http://localhost:8081}/subjects/divolte-value/versions/latest"
