@@ -73,6 +73,8 @@ mapping {
     // referer / version
 
     map referer() onto 'referer'
+    
+    def refererUri = parse referer() to uri
     map refererUri.scheme() onto 'refererScheme'
     map refererUri.path() onto 'refererPath'
     map refererUri.host() onto 'refererHost'
