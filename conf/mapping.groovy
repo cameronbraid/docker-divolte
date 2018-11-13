@@ -51,6 +51,7 @@ mapping {
 
     mapOptionalSringParam('email')
     mapOptionalSringParam('username')
+
     // is
 
     map boolParam('isAdmin') onto 'isAdmin'
