@@ -160,6 +160,12 @@
     { "name": "referenceCode", "type": ["null", "string"], "default": null },
     { "name": "variation", "type": ["null", "string"], "default": null },
 
+    { "name": "urmSource", "type": ["null", "string"], "default": null },
+    { "name": "urmMedium", "type": ["null", "string"], "default": null },
+    { "name": "urmTerm", "type": ["null", "string"], "default": null },
+    { "name": "urmContent", "type": ["null", "string"], "default": null },
+    { "name": "urmCampaign", "type": ["null", "string"], "default": null },
+
     // viewport / screen
 
     { "name": "viewportPixelWidth", "type": ["null", "int"], "default": null },
