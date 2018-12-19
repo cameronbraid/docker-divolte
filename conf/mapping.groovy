@@ -94,6 +94,13 @@ mapping {
     map cookie('reference') onto 'referenceCode'
     map locationUri.query().value('variation') onto 'variation'
 
+    mapOptionalSringParam('utmSource')
+    mapOptionalSringParam('utmMedium')
+    mapOptionalSringParam('utmTerm')
+    mapOptionalSringParam('utmContent')
+    mapOptionalSringParam('utmCampaign')
+
+
     // uri
 
     map location() onto 'uri'

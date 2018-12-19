@@ -160,11 +160,11 @@
     { "name": "referenceCode", "type": ["null", "string"], "default": null },
     { "name": "variation", "type": ["null", "string"], "default": null },
 
-    { "name": "urmSource", "type": ["null", "string"], "default": null },
-    { "name": "urmMedium", "type": ["null", "string"], "default": null },
-    { "name": "urmTerm", "type": ["null", "string"], "default": null },
-    { "name": "urmContent", "type": ["null", "string"], "default": null },
-    { "name": "urmCampaign", "type": ["null", "string"], "default": null },
+    { "name": "utmSource", "type": ["null", "string"], "default": null },
+    { "name": "utmMedium", "type": ["null", "string"], "default": null },
+    { "name": "utmTerm", "type": ["null", "string"], "default": null },
+    { "name": "utmContent", "type": ["null", "string"], "default": null },
+    { "name": "utmCampaign", "type": ["null", "string"], "default": null },
 
     // viewport / screen
 
