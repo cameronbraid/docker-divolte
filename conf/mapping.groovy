@@ -96,7 +96,7 @@ mapping {
     map refererUri.query() onto 'refererQuery'
     map refererUri.decodedFragment() onto 'refererFragment'
 
-    mapOptionalSringParamOnto('affiliate', 'affiliateCode')
+    mapOptionalSringParam('affiliateCode')
     map cookie('reference') onto 'referenceCode'
     map locationUri.query().value('variation') onto 'variation'
 
