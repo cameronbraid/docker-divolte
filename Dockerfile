@@ -12,6 +12,7 @@ FROM openjdk:8-jre-slim
 
 ARG BUILD_DATE
 ARG DIVOLTE_VERSION=0.8.0
+ARG DIVOLTE_CHECKSUM=4bbd88cffebbb36beeb3c82008adce6db36b76263211ea43fd77cd8e80badb32
 ARG ENABLE_KERBEROS=no
 ENV ENABLE_KERBEROS=$ENABLE_KERBEROS
 
@@ -33,7 +34,7 @@ RUN apt-get update && \
     mkdir -p /opt/divolte && \
     cd /tmp/ && \
     curl -O http://divolte-releases.s3-website-eu-west-1.amazonaws.com/divolte-collector/${DIVOLTE_VERSION}/distributions/divolte-collector-${DIVOLTE_VERSION}.tar.gz && \
-    echo "4bbd88cffebbb36beeb3c82008adce6db36b76263211ea43fd77cd8e80badb32  divolte-collector-${DIVOLTE_VERSION}.tar.gz" | sha256sum -c - && \
+    echo "${DIVOLTE_CHECKSUM}  divolte-collector-${DIVOLTE_VERSION}.tar.gz" | sha256sum -c - && \
     tar zxpf divolte-collector-${DIVOLTE_VERSION}.tar.gz -C /opt/divolte && \
     mv /opt/divolte/divolte-collector-${DIVOLTE_VERSION}/ /opt/divolte/divolte-collector && \
     apt-get autoremove -y && \
