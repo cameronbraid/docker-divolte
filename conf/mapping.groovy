@@ -22,6 +22,12 @@ mapping {
             map eventParam onto name
         }
     }
+    def mapOptionalSringParamOnto = { paramName, ontoParamName -> 
+        def eventParam = eventParameters().value(paramName)
+        when eventParam.isPresent() apply {
+            map eventParam onto ontoParamName
+        }
+    }
 
     def sringParamValue = { name ->
         def eventParam = eventParameters().value(name)
@@ -90,7 +96,7 @@ mapping {
     map refererUri.query() onto 'refererQuery'
     map refererUri.decodedFragment() onto 'refererFragment'
 
-    mapOptionalSringParam('affiliateCode')
+    mapOptionalSringParamOnto('affiliate', 'affiliateCode')
     map cookie('reference') onto 'referenceCode'
     map locationUri.query().value('variation') onto 'variation'
 
