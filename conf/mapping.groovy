@@ -236,7 +236,7 @@ mapping {
         }
 
         when eventType().equalTo("searchResultsView") apply {
-            map 'searchToolsModel' onto 'searchToolsModel'
+            map eventParameters.value('searchToolsModel') onto 'searchToolsModel'
             exit()
         }
 
