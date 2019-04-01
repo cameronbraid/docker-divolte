@@ -1,5 +1,5 @@
 {
-  "namespace": "drivenow.eventstream.types",
+  "namespace": "drivenow.divolte",
   "type": "record",
   "name": "DivolteEvent",
   "fields": [
