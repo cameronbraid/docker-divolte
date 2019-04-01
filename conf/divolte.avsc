@@ -212,6 +212,33 @@
     //  a/b test
 
     { "name": "abTestExperiment", "type": ["null", "string"], "default": null },
-    { "name": "abTestAlternative", "type": ["null", "string"], "default": null }
+    { "name": "abTestAlternative", "type": ["null", "string"], "default": null },
+
+    // searchResultsView
+    {
+      "name": "searchToolsModel",
+      "type" : [
+        "null", 
+        {
+
+          "type": "record",
+          "name" : "SearchToolsModel",
+          "fields": [
+        
+            { "name": "view", "type": "string" },
+            { "name": "sortBy", "type": "string" },
+            { "name": "sortDir", "type": "string" },
+            { "name": "filter", "type": 
+              { "type": "map", "values": 
+                { "type": "array", "items": "string" }
+              }
+            }
+          ]
+        }
+      ],
+      "default": null
+    }
+
   ]
 }
+  

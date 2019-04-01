@@ -235,5 +235,11 @@ mapping {
             exit()
         }
 
+        when eventType().equalTo("searchResultsView") apply {
+            map 'searchToolsModel' onto 'searchToolsModel'
+            exit()
+        }
+
+
     }
 }
