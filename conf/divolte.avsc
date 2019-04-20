@@ -79,6 +79,7 @@
       //   "symbols": [
       //     "pageView",
       //     "orderConversion",
+      //     "orderConfirmed",
       //     "relocationConversion",
       //     "priceWatchConversion",
       //     "hiccupConversion",
@@ -203,11 +204,15 @@
       "default": null
     },
 
-    //  conversion
+    //  order conversion / order confirmed
 
     { "name": "orderKey", "type": ["null", "string"], "default": null },
     { "name": "relocationRef", "type": ["null", "string"], "default": null },
     { "name": "hiccupRef", "type": ["null", "string"], "default": null },
+
+    // order confirmed
+    
+    { "name": "supplierOrderNumber", "type": ["null", "string"], "default": null },
 
     //  a/b test
 
