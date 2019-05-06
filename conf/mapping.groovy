@@ -205,15 +205,19 @@ mapping {
         }
 
         when eventType().equalTo("orderConversion") apply {
+            mapOptionalSringParam('orderType') // order | reloc | ctbooking
             mapOptionalSringParam('orderKey')
             exit()
         }
 
-        when eventType().equalTo("relocationConversion") apply {
-            mapOptionalSringParam('relocationRef')
+        when eventType().equalTo("orderConfirmed") apply {
+            mapOptionalSringParam('orderType') // order | reloc | ctbooking
+            mapOptionalSringParam('orderKey')
+            mapOptionalSringParam('supplierOrderNumber')
+            
             exit()
         }
-
+        
         when eventType().equalTo("priceWatchConversion") apply {
             exit()
         }

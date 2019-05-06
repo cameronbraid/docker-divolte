@@ -1,17 +1,52 @@
 version: "3.3"
 services:
 
-  # Kafka/Zookeeper container
-  divolte-kafka:
+  kafka:
     image: krisgeus/docker-kafka
     environment:
-      ADVERTISED_HOST: divolte-kafka
+      ADVERTISED_HOST: kafka
       LOG_RETENTION_HOURS: 1
       AUTO_CREATE_TOPICS: "false"
       KAFKA_CREATE_TOPICS: divolte:4:1
-      ADVERTISED_LISTENERS: PLAINTEXT://divolte-kafka:9092,INTERNAL://localhost:9093
+      ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,INTERNAL://localhost:9093
       LISTENERS: PLAINTEXT://0.0.0.0:9092,INTERNAL://0.0.0.0:9093
       SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,INTERNAL:PLAINTEXT
       INTER_BROKER: INTERNAL
 
-  # Divolte container
+  schema-registry:
+    image: confluentinc/cp-schema-registry
+    restart: on-failure
+    ports:
+      - 3081:8081
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKASTORE_TOPIC_REPLICATION_FACTOR: "1"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081/
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_DEBUG: "true"
+      KAFKA_HEAP_OPTS: "-Xmx256m -Xms256m"
+    links:
+      - kafka
+    depends_on:
+      - kafka
+
+  divolte:
+    build: .
+    restart: on-failure
+    environment:
+      DIVOLTE_DEBUG_REQUESTS: 'true'
+      DIVOLTE_KAFKA_PRODUCER_BOOTSTRAP_SERVERS: kafka:9092
+      DIVOLTE_JAVASCRIPT_AUTO_PAGE_VIEW_EVENT: 'false'
+      SCHEMA_REGISTRY: http://schema-registry:8081
+      DIVOLTE_KAFKA_SCHEMA_ID: 1
+      # http://divolte-releases.s3-website-eu-west-1.amazonaws.com/divolte-collector/0.6.0/userdoc/html/configuration.html
+      DIVOLTE_JAVA_OPTS: "-XX:+UseG1GC -Xmx256m -Xms256m -Djava.awt.headless=true -XX:+HeapDumpOnOutOfMemoryError"
+    links:
+      - kafka
+      - schema-registry
+    depends_on:
+      - kafka
+      - schema-registry
+    ports:
+      - 8290:8290
