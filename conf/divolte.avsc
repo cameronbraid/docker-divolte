@@ -210,14 +210,11 @@
 
     //  order conversion / order confirmed
 
-    // order (or null) | reloc | ctbooking
-    { "name": "orderType", "type": ["null", "string"], "default": null },
-
     // orderType=order this is the order key
     // orderType=reloc this is the reloc key
     // orderType=ctbooking this is the ct booking ref
     { "name": "orderKey", "type": ["null", "string"], "default": null },
-    
+    { "name": "relocationRef", "type": ["null", "string"], "default": null },
     { "name": "hiccupRef", "type": ["null", "string"], "default": null },
 
     // order confirmed
@@ -252,7 +249,12 @@
         }
       ],
       "default": null
-    }
+    },
+
+    // order (or null) | reloc | ctbooking
+    { "name": "orderType", "type": ["null", "string"], "default": null }
+
+
 
   ]
 }
